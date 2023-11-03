@@ -50,15 +50,46 @@ server.delete("/users/:id", (req, res) => {
         })
 });
 
-server.post("/users", (req, res) => {
+server.post("/user", (req, res) => {
     const user = {
         username: "Mary Jane",
         lastname: "Watson"
     };
     User.create(user)
         .then((user) => console.log("User has has been created: ", user))
-        .catch((error)=> console.log(error));
+        .catch((error) => console.log(error));
+});
+
+const Post = require("./post.model.js");
+
+server.post("/post", (req, res) => {
+    const newPost = {
+        title: "My new post",
+        content: "This is my new post I'm super happy to be here playing chess with the data team"
+    };
+
+    Post.create(newPost)
+        .then((post) => {
+            res.status(200).send("POST CREATED");
+            console.log("Post has has been created: ", post)
+        })
+        .catch((error) => console.log(error));
+
 })
 
+
+// NOW I WANT TO CREATE ALL THE USERS THAT I HAVE IN THE JSON FILE
+
+const arrayOfUsers = require("./users.json");
+
+server.post("/users", (req, res) => {
+    User.insertMany(arrayOfUsers)
+        .then(() => {
+            // res.render("users");
+            res.status(200).send("USERS CREATED");
+            console.log("Users created");
+        })
+        .catch((error) => console.log(error));
+});
 
 server.listen(3000, () => console.log("The server is running on port 3000"));
