@@ -11,7 +11,9 @@ server.set("view engine", "hbs");
 server.set("views", path.join(__dirname, "views"));
 const User = require("./user.model.js");// here I'm importing the user model to make the CRUD
 
-mongoose.connect("mongodb+srv://Marcel:1234@cluster0.1cbl1ij.mongodb.net/test") // add the name of the database at the end
+const MONGODB_URI = require("./variable.js")
+
+mongoose.connect(MONGODB_URI) // add the name of the database at the end
     .then(() => {
         console.log("Connected to MongoDB")
     })
