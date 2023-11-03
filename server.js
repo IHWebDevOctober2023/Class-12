@@ -9,12 +9,14 @@ const server = express();
 server.set("view engine", "hbs");
 
 server.set("views", path.join(__dirname, "views"));
+const User = require("./user.model.js");// here I'm importing the user model to make the CRUD
 
 mongoose.connect("mongodb+srv://Marcel:1234@cluster0.1cbl1ij.mongodb.net/test") // add the name of the database at the end
-    .then(() => console.log("Connected to MongoDB"))
+    .then(() => {
+        console.log("Connected to MongoDB")
+    })
     .catch((error) => console.log(error));
 
-const User = require("./user.model.js");// here I'm importing the user model to make the CRUD
 
 server.get("/users", (req, res) => {
     User.find()
@@ -52,8 +54,7 @@ server.delete("/users/:id", (req, res) => {
 
 server.post("/user", (req, res) => {
     const user = {
-        username: "Mary Jane",
-        lastname: "Watson"
+        username: "Mary Jane"
     };
     User.create(user)
         .then((user) => console.log("User has has been created: ", user))

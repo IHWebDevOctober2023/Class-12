@@ -3,7 +3,14 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema; // Schema is a class!!!
 
 const userSchema = new Schema({
-    lastname: String,
+    lastname: {
+        type:String,
+        required: true
+    },
+    bootcamp:{
+        type: String,
+        enum: ["Web Dev", "Data", "UX/UI"]
+    },
     username: String
 }); // we are creating here an object that belongs to the schema class
 // now mongoDB has already a reference to use this schema and find all the properties
